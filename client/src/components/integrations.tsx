@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 type LogoType = {
 	src: string;
@@ -53,7 +54,7 @@ function IntegrationCard({ row, col, logo }: TileData) {
 			}}
 		>
 			{logo && (
-				<img
+				<Image
 					alt={logo.alt}
 					className={cn(
 						"pointer-events-none size-8 select-none object-contain p-1",

@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/empty";
 import { FullWidthDivider } from "@/components/ui/full-width-divder";
 import { HomeIcon, CompassIcon } from "lucide-react";
+import Link from "next/link";
 
 export function NotFoundPage() {
     return (
@@ -21,16 +22,16 @@ export function NotFoundPage() {
                                 404
                             </EmptyTitle>
                             <EmptyDescription className="text-nowrap">
-                                The page you're looking for might have been <br />
-                                moved or doesn't exist.
+                                The page you&apos;re looking for might have been <br />
+                                moved or doesn&apos;t exist.
                             </EmptyDescription>
                         </EmptyHeader>
                         <EmptyContent>
                             <div className="flex gap-2">
-                                <Button render={<a href="/" />} nativeButton={false}><HomeIcon data-icon="inline-start" />Go Home
+                                <Button render={<Link href="/" />} nativeButton={false}><HomeIcon data-icon="inline-start" />Go Home
                                 </Button>
 
-                                <Button variant="outline" render={<a href="#" />} nativeButton={false}><CompassIcon data-icon="inline-start" />Explore
+                                <Button variant="outline" render={<Link href="#" />} nativeButton={false}><CompassIcon data-icon="inline-start" />Explore
                                 </Button>
                             </div>
                         </EmptyContent>

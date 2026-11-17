@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { ArrowRightIcon, PhoneCallIcon } from "lucide-react";
+import Image from "next/image";
 
 export function HeroSection() {
 	return (
@@ -82,14 +83,14 @@ export function HeroSection() {
 					)}
 				>
 					<div className="relative inset-shadow-2xs inset-shadow-foreground/10 mx-auto max-w-5xl overflow-hidden rounded-lg border bg-background p-2 shadow-xl ring-1 ring-card dark:inset-shadow-foreground/20 dark:inset-shadow-xs">
-						<img
+						<Image
 							alt="app screen"
 							className="z-2 aspect-video rounded-lg border dark:hidden"
 							height="1080"
 							src="https://storage.efferd.com/screen/dashboard-light.webp"
 							width="1920"
 						/>
-						<img
+						<Image
 							alt="app screen"
 							className="hidden aspect-video rounded-lg bg-background dark:block"
 							height="1080"

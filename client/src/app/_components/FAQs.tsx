@@ -14,7 +14,7 @@ export function FaqsSection() {
 				</h2>
 				<p className="max-w-2xl text-muted-foreground">
 					Here are some common questions and answers that you might encounter
-					when using Efferd. If you don't find the answer you're looking for,
+					when using Efferd. If you don&apos;t find the answer you&apos;re looking for,
 					feel free to reach out.
 				</p>
 			</div>
@@ -31,7 +31,7 @@ export function FaqsSection() {
 				))}
 			</Accordion>
 			<p className="text-muted-foreground">
-				Can't find what you're looking for? Contact our{" "}
+				Can&apos;t find what you&apos;re looking for? Contact our{" "}
 				<a className="text-primary hover:underline" href="#">
 					customer support team
 				</a>

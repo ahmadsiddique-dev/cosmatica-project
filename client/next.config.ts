@@ -5,6 +5,11 @@ const nextConfig: NextConfig = {
   experimental: {
     agentFeedback: true,
   },
+  images: {
+    remotePatterns: [
+      new URL("https://storage.efferd.com/**"),
+    ]
+  },
   cacheComponents: true,
   partialPrefetching: true,
   turbopack: {
