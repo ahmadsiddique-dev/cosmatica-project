@@ -6,6 +6,7 @@ import { useScroll } from "@/hooks/use-scroll";
 import { Button } from "@/components/ui/button";
 import { DesktopNav } from "./desktop-nav";
 import { MobileNav } from "./mobile-nav";
+import Image from "next/image";
 
 export function Header() {
 	const scrolled = useScroll(10);
@@ -23,7 +24,7 @@ export function Header() {
 						className="rounded-lg px-3 py-2.5 hover:bg-muted dark:hover:bg-muted/50"
 						href="#"
 					>
-						<Logo className="h-4" />
+						<Image className="text-white" src="/logo.svg" alt="Logo" width={40} height={40} />
 					</a>
 					<DesktopNav />
 				</div>

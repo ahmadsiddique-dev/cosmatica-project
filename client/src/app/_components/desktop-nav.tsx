@@ -8,7 +8,6 @@ import {
 } from "@/components/ui/navigation-menu";
 import { companyLinks, companyLinks2, productLinks } from "./nav-links";
 import { LinkItem } from "./sheard";
-import Link from "next/link";
 
 export function DesktopNav() {
 	return (
