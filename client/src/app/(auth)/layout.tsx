@@ -31,10 +31,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     <Image
                         loading="eager"
                         height={600}
+                        unoptimized
                         width={600}
-                        src="/placeholder.jpg"
+                        src="/placeholder.webp"
                         alt="Image"
-                        className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+                        className="absolute inset-0 h-full w-full object-cover dark:grayscale"
                     />
                 </div>
             </div>
