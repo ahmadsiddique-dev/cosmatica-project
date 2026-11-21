@@ -1,0 +1,83 @@
+---
+title: DB Design
+---
+erDiagram
+    User {
+        int id
+        string username
+        string email
+        string password
+        string refreshToken
+        date createdAt
+        date updatedAt
+    }
+
+    Product {
+        int id
+        string name
+        float price
+        string[] images
+        string featureImage
+        date createdAt
+        date updatedAt
+    }
+
+    User ||--o{ Order: has
+    Order||--|{ OrderItem: has
+    Order {
+        int id
+        int userId
+        date createdAt
+        date updatedAt
+    }
+
+    OrderItem||--||Product: has
+    OrderItem {
+        int id
+        int productId
+        int quantity
+        fload price
+        date createdAt
+        date updatedAt
+    }
+
+    User||--o{ OrderComplaint: comlaints
+    OrderComplaint||--||OrderItem: has
+    OrderComplaint {
+        int id
+        int userId
+        int orderItemId
+        string content
+        string type
+        date createdAt
+        date updatedAt
+    }
+
+    User||--o{ Review: comments
+    OrderItem||--o{ Review: has
+    Review {
+        int id
+        int userId
+        int orderItemId
+        date createdAt
+        date updatedAt
+    }
+
+    User |o--o{ GeneralComplaint: complaints
+    GeneralComplaint {
+        int id
+        int userId
+        string content
+        string type
+        date createdAt
+        date updatedAt
+    }
+    
+    User||--||Feedback: feedbacks
+    Feedback {
+        int id
+        int userId
+        string content
+        date createdAt
+        date updatedAt
+    }

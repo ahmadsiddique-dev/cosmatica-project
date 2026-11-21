@@ -26,7 +26,7 @@ export default function Hero() {
             </div>
           </header>
           <img
-            src="https://images.unsplash.com/photo-1748723594319-142e211b46a9?q=80&w=700&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            src="/product.jpg"
             alt="Dashboard interface of the SaaS platform"
             className="aspect-square w-full rounded-md object-cover"
           />
