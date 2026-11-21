@@ -6,7 +6,7 @@ import { FacebookIcon } from "@/components/icons/facebook-icon";
 import { InstagramIcon } from "@/components/icons/instagram-icon";
 import { LinkedinIcon } from "@/components/icons/linkedin-icon";
 import { YoutubeIcon } from "@/components/icons/youtube-icon";
-import { Logo } from "@/app/_components/logo";
+import Image from "next/image";
 
 type FooterLink = {
 	title: string;
@@ -86,7 +86,7 @@ export function Footer() {
 
 			<div className="grid w-full gap-8 py-6 md:py-8 lg:grid-cols-3 lg:gap-8">
 				<AnimatedContainer className="space-y-4">
-					<Logo className="h-4" />
+					<Image src={"/logo.svg"} height={250} width={150} alt="brand logo" className="h-4" />
 					<p className="mt-8 text-muted-foreground text-sm md:mt-0">
 						Beautify your app with efferd.
 					</p>
