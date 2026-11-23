@@ -4,7 +4,8 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "dev": "node --watch src/index.ts"
+        "dev": "node --watch src/index.ts",
+        "prettier": "npx prettier . --write"
     },
     "keywords": [],
     "type": "module",
