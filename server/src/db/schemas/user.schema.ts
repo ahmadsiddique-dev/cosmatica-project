@@ -9,8 +9,8 @@ const UserTable = pgTable("users", {
     facebookUrl: text("facebookUrl"),
     instagramUrl: text("instagramUrl"),
     linkedinUrl: text("linkedinUrl"),
-    phoneNumber: text('phoneNumber'),
-    password: varchar({ length: 70 }).notNull(),
+    phoneNumber: text("phoneNumber"),
+    password: varchar({ length: 100 }).notNull(),
     refreshToken: text("refreshToken").notNull(),
     createdAt: timestamp("createdAt").defaultNow().notNull(),
     updatedAt: timestamp("updatedAt")
