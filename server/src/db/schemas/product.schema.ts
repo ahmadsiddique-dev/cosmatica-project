@@ -6,6 +6,7 @@ import {
     text,
     timestamp,
     varchar,
+    vector,
 } from "drizzle-orm/pg-core";
 
 /*
@@ -26,6 +27,9 @@ const ProductTable = pgTable("products", {
     images: text("images").array(),
     featureImage: text("featureImage"),
     tags: varchar({ length: 100 }).array(),
+    embedding: vector("embedding", {
+        dimensions: 1536,
+    }),
     createdAt: timestamp("createdAt").defaultNow().notNull(),
     updatedAt: timestamp("updatedAt")
         .defaultNow()
