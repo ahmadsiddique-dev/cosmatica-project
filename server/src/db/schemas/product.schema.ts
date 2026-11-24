@@ -15,6 +15,7 @@ because this is not sufficient data for a product
 */
 const ProductTable = pgTable("products", {
     id: serial("id").primaryKey(),
+    externalId: varchar("externalId", { length: 50 }).notNull().unique(),
     title: text("title").notNull(),
     description: text("description").notNull(),
     slug: text("slug").notNull(),
@@ -26,7 +27,7 @@ const ProductTable = pgTable("products", {
     price: numeric("price", { precision: 10, scale: 2 }).notNull(),
     images: text("images").array(),
     featureImage: text("featureImage"),
-    tags: varchar({ length: 100 }).array(),
+    tags: text("tags").array(),
     embedding: vector("embedding", {
         dimensions: 1536,
     }),

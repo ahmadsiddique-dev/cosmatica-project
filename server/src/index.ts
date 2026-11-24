@@ -7,7 +7,7 @@ const app = express();
 const port = process.env.PORT || 4000;
 
 app.get("/", async (_, res) => {
-    const result = await db.execute(sql`SELECT * from users`);
+    const result = await db.execute(sql`SELECT * FROM users`);
     console.log(result);
     res.json(result);
 });
