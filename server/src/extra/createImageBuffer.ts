@@ -1,6 +1,7 @@
-import sharp from 'sharp'
+import sharp from "sharp";
 
-const path = "/home/ahmadsiddique/Projects/Development/cosmatica-project/server/src/extra/hand.jpeg";
+const path =
+    "/home/ahmadsiddique/Projects/Development/cosmatica-project/server/src/extra/hand.jpeg";
 
 const imageBuffer = await sharp(path)
     .resize({
@@ -8,8 +9,8 @@ const imageBuffer = await sharp(path)
         withoutEnlargement: true,
     })
     .jpeg({
-        quality: 75
+        quality: 75,
     })
-    .toBuffer()
+    .toBuffer();
 
 export default imageBuffer;

@@ -4,29 +4,26 @@ import OutputSchema from "../extra/structureOutput.ts";
 import imageBuffer from "../extra/createImageBuffer.ts";
 
 export async function embedText(text: string) {
-  const response = await fetch(
-    "https://ai-gateway.vercel.sh/v1/embeddings",
-    {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${process.env.AI_GATEWAY_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model: "cohere/embed-v5.0-fast",
-        input: text,
-        dimensions: 1536,
-      }),
+    const response = await fetch("https://ai-gateway.vercel.sh/v1/embeddings", {
+        method: "POST",
+        headers: {
+            Authorization: `Bearer ${process.env.AI_GATEWAY_API_KEY}`,
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            model: "cohere/embed-v5.0-fast",
+            input: text,
+            dimensions: 1536,
+        }),
+    });
+
+    if (!response.ok) {
+        throw new Error(await response.text());
     }
-  );
 
-  if (!response.ok) {
-    throw new Error(await response.text());
-  }
+    const data = await response.json();
 
-  const data = await response.json();
-
-  return data.data[0].embedding as number[];
+    return data.data[0].embedding as number[];
 }
 
 const SearchProduct = async (req: any, res: any) => {
@@ -92,7 +89,7 @@ const SearchProduct = async (req: any, res: any) => {
             },
         ]);
 
-        const result = await embedText(response.skinType)
+        const result = await embedText(response.skinType);
 
         console.log(result);
 

@@ -29,8 +29,6 @@ async function GenerateSomeEmbeddings(range: number) {
                 .set({ embedding: embeddings })
                 .where(eq(ProductTable.id, i));
         });
-
-
     }
 }
 
