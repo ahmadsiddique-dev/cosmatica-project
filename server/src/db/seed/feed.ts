@@ -1,10 +1,41 @@
 import { db } from "../index.ts";
-import fs from "fs";
+import fs from "fs/promises";
 import { parse } from "csv-parse";
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 import data from "./data.json" with { type: "json" };
-import ProductTable from "../schemas/product.schema.ts";
+import ProductTable from "../../schemas/product.schema.ts";
+import { and, eq, gt, lt, or } from "drizzle-orm";
+import { embedText } from "../../controller/product.controller.ts";
+
+async function GenerateSomeEmbeddings(range: number) {
+    let result;
+
+    for (let i = 1; i <= range; i++) {
+        result = await db
+            .select({
+                id: ProductTable.id,
+                description: ProductTable.description,
+            })
+            .from(ProductTable)
+            .where(eq(ProductTable.id, i));
+
+        result.map(async (r) => {
+            let text = r.description;
+            const embeddings = await embedText(text);
+
+            await db
+                .update(ProductTable)
+                .set({ embedding: embeddings })
+                .where(eq(ProductTable.id, i));
+        });
+
+
+    }
+}
+
+GenerateSomeEmbeddings(30);
+// console.log(await fs.writeFile("./response.json", JSON.stringify(results)));
 
 let records: any = [];
 let i = 0;
@@ -38,7 +69,7 @@ async function InsertData() {
     }
 }
 
-InsertData();
+// InsertData();
 
 // const data = fs.readFileSync(`${dirname(fileURLToPath(import.meta.url))}/data.csv`)
 
