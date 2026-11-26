@@ -1,5 +1,5 @@
+import { QueryProducts } from "../extra/similartySearch.ts";
 import { ChatOpenAI } from "@langchain/openai";
-import fs from "node:fs/promises";
 import OutputSchema from "../extra/structureOutput.ts";
 import imageBuffer from "../extra/createImageBuffer.ts";
 
@@ -91,9 +91,11 @@ const SearchProduct = async (req: any, res: any) => {
 
         const result = await embedText(response.skinType);
 
-        console.log(result);
+        const searchedProducts = await QueryProducts(result);
 
-        res.send(result);
+        console.log(searchedProducts);
+
+        res.send(searchedProducts);
     } catch (error) {
         console.log(error instanceof Error ? error : "Some error occured");
         res.send("error side");
