@@ -26,7 +26,7 @@ export default function Hero() {
             </div>
           </header>
           <img
-            src="/product.jpg"
+            src="/hero.jpg"
             alt="Dashboard interface of the SaaS platform"
             className="aspect-square w-full rounded-md object-cover"
           />
