@@ -1,7 +1,7 @@
 import sharp from "sharp";
 
 const path =
-    "/home/ahmadsiddique/Projects/Development/cosmatica-project/server/src/extra/hand.jpeg";
+    "/home/ahmadsiddique/Projects/Development/cosmatica-project/server/src/lib/hand.jpeg";
 
 const imageBuffer = await sharp(path)
     .resize({

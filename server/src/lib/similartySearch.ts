@@ -1,5 +1,5 @@
 import { asc, cosineDistance } from "drizzle-orm";
-import { db } from "../db/index.ts";
+import { db } from "./db.ts";
 import ProductTable from "../schemas/product.schema.ts";
 
 export async function QueryProducts(embeddings: number[]) {

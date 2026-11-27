@@ -11,7 +11,7 @@ const UserTable = pgTable("users", {
     linkedinUrl: text("linkedinUrl"),
     phoneNumber: text("phoneNumber"),
     password: varchar({ length: 100 }).notNull(),
-    refreshToken: text("refreshToken").notNull(),
+    refreshToken: text("refreshToken"),
     createdAt: timestamp("createdAt").defaultNow().notNull(),
     updatedAt: timestamp("updatedAt")
         .defaultNow()

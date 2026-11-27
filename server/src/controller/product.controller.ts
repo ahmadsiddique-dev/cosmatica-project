@@ -1,7 +1,7 @@
-import { QueryProducts } from "../extra/similartySearch.ts";
+import { QueryProducts } from "../lib/similartySearch.ts";
 import { ChatOpenAI } from "@langchain/openai";
-import OutputSchema from "../extra/structureOutput.ts";
-import imageBuffer from "../extra/createImageBuffer.ts";
+import OutputSchema from "../lib/structureOutput.ts";
+import imageBuffer from "../lib/createImageBuffer.ts";
 
 export async function embedText(text: string) {
     const response = await fetch("https://ai-gateway.vercel.sh/v1/embeddings", {
