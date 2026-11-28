@@ -1,105 +1,146 @@
-'use client';
+"use client";
 
+import { useForm } from "react-hook-form";
+import { cn } from "cn";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@/components/ui/button";
+import { useAuthStore } from "@/store/useAuthStore";
 import {
-    Stepper,
-    StepperContent,
-    StepperIndicator,
-    StepperItem,
-    StepperList,
-    StepperSeparator,
-    StepperTrigger,
-} from "@/components/ui/stepper";
-import FirstStep from "./_components/first-step";
-import React from "react";
-
-
-const steps = [
-    {
-        value: "account",
-        title: "Account Setup",
-        description: "Create your account and verify email",
-    },
-    {
-        value: "verification",
-        title: "Email Verification",
-        description: "Verify your email address to continue",
-    },
-    {
-        value: "profile",
-        title: "Profile Information",
-        description: "Add your personal details and preferences",
-    },
-    {
-        value: "complete",
-        title: "Complete Setup",
-        description: "Review and finish your account setup",
-    },
-];
+  Field,
+  FieldDescription,
+  FieldGroup,
+  FieldLabel,
+} from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import { signupSchema } from "./_lib/signup.schema";
+import { generateNumericUsername } from "./_lib/userNameGenerator";
+import { useApi } from "@/lib/apiClient";
+import axios from "axios";
+import Link from "next/link";
 
 export default function page() {
-    const [step, setStep] = React.useState("account");
+  const { setAuth } = useAuthStore();
+  const {
+    execute: SignupRequest,
+    loading: SignupLoading,
+    data: SignupData,
+    error: SignupError,
+  } = useApi(async (payload: any) => {
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/signup`,
+      payload,
+      {
+        withCredentials: true,
+      },
+    );
+    return response.data;
+  });
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(signupSchema),
+  });
 
-    const stepIndex = React.useMemo(
-    () => steps.findIndex((s) => s.value === step),
-    [step],
+  const onSubmit = async (data: any) => {
+    let userName;
 
+    if (data.fullName) {
+      userName = generateNumericUsername(data.fullName);
+    }
+
+    const payload = {
+      ...data,
+      userName,
+    };
+
+    try {
+      const result = await SignupRequest(payload);
+      
+      setAuth(result?.user, result?.accessToken)
+    } catch (err) {
+      console.error("API call failed", err);
+    }
+  };
+
+  return (
+    <div>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className={cn("flex flex-col gap-6")}
+      >
+        <FieldGroup>
+          <div className="flex flex-col items-center gap-1 text-center">
+            <h1 className="text-2xl font-bold">Create your account</h1>
+            <p className="text-sm text-balance text-muted-foreground">
+              Fill in the form below to create your account
+            </p>
+          </div>
+          <Field>
+            <FieldLabel htmlFor="fullName">Full Name</FieldLabel>
+            <Input
+              id="fullName"
+              {...register("fullName")}
+              type="text"
+              placeholder="John Doe"
+            />
+            {errors.fullName?.message && (
+              <p className="text-sm text-red-500 mt-1">
+                {String(errors.fullName.message)}
+              </p>
+            )}
+          </Field>
+          <Field>
+            <FieldLabel htmlFor="email">Email</FieldLabel>
+            <Input
+              id="email"
+              {...register("email")}
+              type="email"
+              placeholder="m@example.com"
+            />
+            {errors.email?.message && (
+              <p className="text-sm text-red-500 mt-1">
+                {String(errors.email.message)}
+              </p>
+            )}
+          </Field>
+          <Field>
+            <FieldLabel htmlFor="password">Password</FieldLabel>
+            <Input id="password" {...register("password")} type="password" />
+            {errors.password?.message && (
+              <p className="text-sm text-red-500 mt-1">
+                {String(errors.password.message)}
+              </p>
+            )}
+          </Field>
+          <Field>
+            <FieldLabel htmlFor="confirmPassword">Confirm Password</FieldLabel>
+            <Input
+              id="confirmPassword"
+              {...register("confirmPassword")}
+              type="password"
+            />
+            {errors.confirmPassword?.message && (
+              <p className="text-sm text-red-500 mt-1">
+                {String(errors.confirmPassword.message)}
+              </p>
+            )}
+          </Field>
+          <Field>
+            <Button type="submit" disabled={SignupLoading}>
+              Create Account
+            </Button>
+            <FieldDescription className="text-center">
+              Already have an account?{" "}
+              <Link href="/login" className="underline underline-offset-4">
+                Login
+              </Link>
+            </FieldDescription>
+          </Field>
+        </FieldGroup>
+      </form>
+    </div>
   );
-    return (
-        <Stepper value={step} className="w-full max-w-md">
-            <StepperList>
-                {steps.map((step) => (
-                    <StepperItem key={step.value} value={step.value}>
-                        <StepperTrigger>
-                            <StepperIndicator />
-                        </StepperTrigger>
-                        <StepperSeparator />
-                    </StepperItem>
-                ))}
-            </StepperList>
-            {steps.map((step) => (
-                <StepperContent key={step.value} value={step.value}>
-                    {step.value === "account" && (
-                        <FirstStep onNext={() => setStep("verification")} />
-                    )}
-                    {step.value === "verification" && (
-                        <div>
-                            <h2 className="text-lg font-semibold">Email Verification</h2>
-                            <p className="text-sm text-muted-foreground">
-                                Please check your email for a verification link to continue.
-                            </p>
-                        </div>
-                    )}
-                    {step.value === "profile" && (
-                        <div>
-                            <h2 className="text-lg font-semibold">Profile Information</h2>
-                            <p className="text-sm text-muted-foreground">
-                                Fill in your personal details and preferences.
-                            </p>
-                        </div>
-                    )}
-                    {step.value === "complete" && (
-                        <div>
-                            <h2 className="text-lg font-semibold">Complete Setup</h2>
-                            <p className="text-sm text-muted-foreground">
-                                Review your information and finish setting up your account.
-                            </p>
-                        </div>
-                    )}
-                </StepperContent>
-            ))}
-        </Stepper>
-    )
 }
-
-
-
-
-
-
-
-
-
-
-
-
