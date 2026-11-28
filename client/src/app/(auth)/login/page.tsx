@@ -13,26 +13,21 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { loginSchema } from "./_lib/login.schema";
 import { useApi } from "@/lib/apiClient";
-import axios from "axios";
+import { loginRequest } from "@/lib/authApi";
 
 export default function page({ className }: React.ComponentProps<"form">) {
   const { setAuth } = useAuthStore();
+  const router = useRouter();
   const {
     execute: LoginRequest,
     loading: LoginLoading,
     data: LoginData,
     error: LoginError,
   } = useApi(async (payload: any) => {
-    const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/login`,
-      payload,
-      {
-        withCredentials: true,
-      },
-    );
-    return response.data;
+    return loginRequest(payload);
   });
 
   const {
@@ -46,8 +41,13 @@ export default function page({ className }: React.ComponentProps<"form">) {
   const onSubmit = async (data: any) => {
     try {
       const result = await LoginRequest(data);
-      
-      setAuth(result?.user, result?.accessToken)
+
+      setAuth(result.user, result.accessToken);
+
+      const next =
+        new URLSearchParams(window.location.search).get("next") ||
+        "/dashboard";
+      router.replace(next);
     } catch (err) {
       console.error("API call failed", err);
     }

@@ -7,9 +7,15 @@ import { DesktopNav } from "./desktop-nav";
 import { MobileNav } from "./mobile-nav";
 import Image from "next/image";
 import Link from "next/link";
+import { useAuthStore } from "@/store/useAuthStore";
+import { useLogout } from "@/hooks/use-logout";
 
 export function Header() {
 	const scrolled = useScroll(10);
+	const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+	const isInitializing = useAuthStore((state) => state.isInitializing);
+	const user = useAuthStore((state) => state.user);
+	const logout = useLogout();
 
 	return (
 		<header
@@ -29,8 +35,19 @@ export function Header() {
 					<DesktopNav />
 				</div>
 				<div className="hidden items-center gap-2 md:flex">
-					<Link href="/login"><Button variant="outline">Sign In</Button></Link>
-					<Link href="/signup"><Button>Get Started</Button></Link>
+					{isInitializing ? null : isAuthenticated ? (
+						<>
+							<Link href="/dashboard">
+								<Button variant="outline">{user?.userName ?? "Dashboard"}</Button>
+							</Link>
+							<Button onClick={logout}>Log out</Button>
+						</>
+					) : (
+						<>
+							<Link href="/login"><Button variant="outline">Sign In</Button></Link>
+							<Link href="/signup"><Button>Get Started</Button></Link>
+						</>
+					)}
 				</div>
 				<MobileNav />
 			</nav>

@@ -15,25 +15,20 @@ import { Input } from "@/components/ui/input";
 import { signupSchema } from "./_lib/signup.schema";
 import { generateNumericUsername } from "./_lib/userNameGenerator";
 import { useApi } from "@/lib/apiClient";
-import axios from "axios";
+import { signupRequest } from "@/lib/authApi";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function page() {
   const { setAuth } = useAuthStore();
+  const router = useRouter();
   const {
     execute: SignupRequest,
     loading: SignupLoading,
     data: SignupData,
     error: SignupError,
   } = useApi(async (payload: any) => {
-    const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/signup`,
-      payload,
-      {
-        withCredentials: true,
-      },
-    );
-    return response.data;
+    return signupRequest(payload);
   });
 
   const {
@@ -58,8 +53,9 @@ export default function page() {
 
     try {
       const result = await SignupRequest(payload);
-      
-      setAuth(result?.user, result?.accessToken)
+
+      setAuth(result.user, result.accessToken);
+      router.replace("/dashboard");
     } catch (err) {
       console.error("API call failed", err);
     }
